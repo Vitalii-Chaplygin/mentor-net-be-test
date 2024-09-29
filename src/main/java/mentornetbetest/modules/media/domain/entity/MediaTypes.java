@@ -17,6 +17,8 @@ public class MediaTypes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String title;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -30,5 +32,5 @@ public class MediaTypes {
         return Objects.hash(id, title);
     }
 
-    private String title;
+
 }
