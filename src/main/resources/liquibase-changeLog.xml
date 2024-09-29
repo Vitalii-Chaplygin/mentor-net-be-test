@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!--  создаем таблицу announcement -->
+    <changeSet id="create-table-announcement" author="Vitalii-Chaplygin">
+        <createTable tableName="announcement">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- создаем таблицу media_types -->
+    <changeSet id="create-table-media-types" author="Vitalii-Chaplygin">
+        <createTable tableName="media_types">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- создаем таблицу media и добавляем внешние ключи -->
+    <changeSet id="create-table-media" author="Vitalii-Chaplygin">
+        <createTable tableName="media">
+            <column name="media_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="link" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="media_type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="announcement_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="media"
+                baseColumnNames="media_type_id"
+                referencedTableName="media_types"
+                referencedColumnNames="id"
+                constraintName="fk_media_media_types"/>
+
+        <addForeignKeyConstraint
+                baseTableName="media"
+                baseColumnNames="announcement_id"
+                referencedTableName="announcement"
+                referencedColumnNames="id"
+                constraintName="fk_media_announcement"/>
+    </changeSet>
+
+</databaseChangeLog>
